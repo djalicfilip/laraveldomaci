@@ -122,4 +122,60 @@ return response()
         $reservation->delete();
         return response()->json('Reservation deleted successfully.');
     }
+
+//kreira novu rezevaciju
+public function add(Request $request)
+{
+    $validator=Validator::make($request->all(),[
+        'number_of_people'=>'required|lt:5',
+        'package_id'=>'required',
+        'client_id'=>'required'
+      ]);
+      if ($validator->fails()){
+          return response()->json($validator->errors());
+      }
+
+$reservation=Reservation::create([
+  'number_of_people'=>$request->number_of_people,
+  'package_id'=>$request->package_id,
+  'client_id'=>$request->client_id,
+  'user_id'=>Auth::user()->id
+]);
+
+
+    return response()->json(['Reservation created successfully', new ReservationResource($reservation)]);
+}
+
+
+//trazi rezervaciju po id-ju i azuzira je
+public function updateById(Request $request, int $id)
+{
+    $validator=Validator::make($request->all(),[
+        'number_of_people'=>'required|lt:5',
+        'package_id'=>'required',
+        'client_id'=>'required'
+      ]);
+      if ($validator->fails()){
+          return response()->json($validator->errors());
+      }
+    $reservation = Reservation::find($id);
+    $reservation->package_id=$request->package_id;
+    $reservation->number_of_people=$request->number_of_people;
+    $reservation->client_id=$request->client_id;
+    $reservation->save();
+    
+    return response()
+    ->json(['Reservation updated successfully.', new ReservationResource($reservation)]);
+}
+
+//trazi rezervaciju po id-ju i brise je 
+public function delete(int $id)
+{
+    $reservation = Reservation::findOrFail($id);
+    $reservation->delete();
+
+    return response()->json('Reservation deleted successfully.');
+}
+
+
 }

@@ -27,6 +27,10 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         return auth()->user();
     });
 Route::resource('reservations', ReservationController::class)->only(['update','store','destroy']);
+Route::delete('/reservation/{id}', [ReservationController::class, 'delete']);
+Route::put('/reservation/{id}', [ReservationController::class, 'updateById']);
+Route::post('/reservation', [ReservationController::class, 'add']);
+
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/logout', [AuthController::class, 'logout']);
