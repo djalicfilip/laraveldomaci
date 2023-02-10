@@ -14,7 +14,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        //
+        $users=User::all();
+        return $users;
     }
 
     /**
@@ -44,9 +45,15 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+$user=User::find($id);
+if(is_null($user)){
+    return response()->json('User not found',404);
+}
+return response()->json(($user));
+
+
     }
 
     /**
