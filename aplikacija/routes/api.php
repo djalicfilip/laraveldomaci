@@ -2,6 +2,10 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ReservationController;
+use App\Http\Controllers\UserReservationController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\API\AuthController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,7 +34,8 @@ Route::resource('reservations', ReservationController::class)->only(['update','s
 Route::delete('/reservation/{id}', [ReservationController::class, 'delete']);
 Route::put('/reservation/{id}', [ReservationController::class, 'updateById']);
 Route::post('/reservation', [ReservationController::class, 'add']);
-
+Route::get('/package/{id}/reservation', [ReservationController::class, 'packagereservation']);
+Route::get('/users/{id}/reservations', [UserReservationController::class, 'index']);
 Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{id}', [UserController::class, 'show']);
 Route::post('/logout', [AuthController::class, 'logout']);

@@ -176,6 +176,14 @@ public function delete(int $id)
 
     return response()->json('Reservation deleted successfully.');
 }
+public function packagereservation(int $id)
+    {
 
+        $reservations = Reservation::get()->where('package_id', $id);
+        if (is_null($reservations)) {
+            return response()->json("There is no reservation for this package");
+        }
+        return response()->json($reservations);
+    }
 
 }
