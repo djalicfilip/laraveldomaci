@@ -14,7 +14,8 @@ class ReservationController extends Controller
      */
     public function index()
     {
-        //
+        $reservations=Reservation::all();
+        return new ReservationCollection($reservations);
     }
 
     /**
@@ -46,7 +47,7 @@ class ReservationController extends Controller
      */
     public function show(Reservation $reservation)
     {
-        //
+        return new ReservationResource($reservation);
     }
 
     /**
